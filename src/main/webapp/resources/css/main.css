@@ -1,0 +1,31 @@
+@charset "UTF-8";
+#reply-page > li >a{
+	text-decoration-line: none;
+	margin : auto;
+	color : white;
+}
+.page_ul{
+    list-style-type: none;
+    float:right
+}
+.page_ul > li {
+	height : 20px;
+	width : 20px;
+	float : left;
+	list-style : none;
+	color: #fff;
+    font-size: 16px;
+    background-color: black;
+    border-radius: 6px;
+}
+.page_a{
+	text-decoration-line: none;
+	margin : auto;
+	color : white;
+}
+
+.page_ul .page-link.active {
+    background-color: #008000;
+    color: white;
+    text-decoration: underline;
+}

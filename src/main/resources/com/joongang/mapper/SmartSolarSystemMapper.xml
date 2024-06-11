@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+	
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "
+	http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.joongang.mapper.SmartSolarSystemMapper">
+	<insert id="insert">
+		insert into smartsolarsystem (automode, horizontal, vertical, volt) 
+		values (#{automode}, #{horizontal}, #{vertical}, #{volt}, )
+	</insert>
+	
+	 <select id="getListWithPaging" resultType="com.joongang.domain.SmartSolarSystemVO">
+	 <![CDATA[
+   			select  rn, id, automode, horizontal, vertical, volt
+			from
+			(
+   			select /*+INDEX_DESC(smartsolarsystem smartsolarsystem_PK)*/
+    		rownum rn, id, automode, horizontal, vertical, volt
+   			from smartsolarsystem
+    		where rownum <= #{criteria.pageNum} * #{criteria.amount}
+			)
+			where rn > (#{criteria.pageNum}-1) * #{criteria.amount} 
+
+			]]>
+	</select>
+	
+	<select id="getTotalCount" resultType="int" >
+		select count(id) from smartsolarsystem
+	</select>
+</mapper>
