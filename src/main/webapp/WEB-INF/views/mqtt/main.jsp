@@ -163,6 +163,7 @@
 <script type="text/javascript" src="/resources/js/reply.js"></script>
 <script>
 $(function() {
+	alert("test");
 	let pageNum = 1;
 	showList(pageNum);
 	$(".panel-footer").on("click", 'li a', function(e) {
