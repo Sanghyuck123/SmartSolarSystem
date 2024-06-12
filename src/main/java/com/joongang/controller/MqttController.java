@@ -31,7 +31,7 @@ public class MqttController {
 	
 	private MqttPahoService pahoService;
 	
-	private static final String inTopic = "SolarSystem/tx";
+	private static final String inTopic = "SolarSystem/rx";
 	
 	@GetMapping("/main")
 	public void main(Model model) {

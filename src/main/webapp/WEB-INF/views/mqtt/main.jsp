@@ -185,6 +185,7 @@
 <!-- Three.js Script -->
 <script>
 $(function() {
+	
 	let pageNum = 1;
 	showList(pageNum);
 	$(".panel-footer").on("click", 'li a', function(e) {
@@ -212,7 +213,7 @@ $(function() {
 	        	
             }, 3000);
     }
-	
+	let group;
 	function showList(pageNum) {
 		$.getJSON("/mqtt/list"+"/"+pageNum,
 		    function(list) {
@@ -305,10 +306,10 @@ function initThreeJS() {
 
     var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
     camera.position.set(0, 0, 20);
-    
 
     var renderer = new THREE.WebGLRenderer();
-    renderer.setSize(window.innerWidth, window.innerHeight);
+    /* renderer.setSize(window.innerWidth, window.innerHeight); */
+     renderer.setSize(800, 400);
     document.getElementById("threejs-container").appendChild(renderer.domElement);
 
   
@@ -326,7 +327,7 @@ function initThreeJS() {
     group.add(cylinder); 
 
 
-    var rectangleWidth = 4;
+    var rectangleWidth = 6;
     var rectangleHeight = 1; 
     var rectangleDepth = 0.1;
 
@@ -386,53 +387,56 @@ function initThreeJS() {
             render();
         }
     }
+    $("a[data-value='up']").on("click", function(e) {
+        e.preventDefault();
+        var currentRotationX = group.children[1].rotation.x;
+        if (currentRotationX > Math.PI / 12) {
+        	var rotateAngle = Math.PI / 90; 
+            group.children[1].rotation.x -= rotateAngle;
+            render();
+        }
+    });
+
+    $("a[data-value='down']").on("click", function(e) {
+        e.preventDefault();
+        var currentRotationX = group.children[1].rotation.x;
+        if (currentRotationX < Math.PI * 5 / 12) { 
+            var rotateAngle = Math.PI / 90; 
+            group.children[1].rotation.x += rotateAngle;
+            render();
+        }
+    });
+
+    $("a[data-value='right']").on("click", function(e) {
+        e.preventDefault();
+        var rotateAngle = Math.PI / 90; 
+        var currentRotation = group.rotation.y;
+        var newRotation = currentRotation - rotateAngle;
+        if (newRotation <= -Math.PI / 2) {
+            newRotation = -Math.PI / 2;
+        }
+        group.rotation.y = newRotation;
+        render();
+    });
+
+    $("a[data-value='left']").on("click", function(e) {
+        e.preventDefault();
+        var rotateAngle = Math.PI / 90; 
+        var currentRotation = group.rotation.y;
+        var newRotation = currentRotation + rotateAngle;
+        if (newRotation >= Math.PI / 6) {
+            newRotation = Math.PI / 6;
+        }
+        group.rotation.y = newRotation;
+        render();
+    });
 }
 
 window.onload = initThreeJS;
 
-$("#up-button").on("click", function(e) {
-    e.preventDefault();
-    var currentRotationX = group.rotation.x;
-    if (currentRotationX > Math.PI / 12) {
-        var rotateAngle = Math.PI / 6; 
-        group.rotation.x -= rotateAngle;
-        render();
-    }
-});
 
-$("#down-button").on("click", function(e) {
-    e.preventDefault();
-    var currentRotationX = group.rotation.x;
-    if (currentRotationX < Math.PI * 5 / 12) { 
-        var rotateAngle = Math.PI / 6; 
-        group.rotation.x += rotateAngle;
-        render();
-    }
-});
 
-$("#right-button").on("click", function(e) {
-    e.preventDefault();
-    var rotateAngle = Math.PI / 6; 
-    var currentRotation = group.rotation.y;
-    var newRotation = currentRotation - rotateAngle;
-    if (newRotation <= -Math.PI / 2) {
-        newRotation = -Math.PI / 2;
-    }
-    group.rotation.y = newRotation;
-    render();
-});
 
-$("#left-button").on("click", function(e) {
-    e.preventDefault();
-    var rotateAngle = Math.PI / 6; 
-    var currentRotation = group.rotation.y;
-    var newRotation = currentRotation + rotateAngle;
-    if (newRotation >= Math.PI / 6) {
-        newRotation = Math.PI / 6;
-    }
-    group.rotation.y = newRotation;
-    render();
-});
 
 
 

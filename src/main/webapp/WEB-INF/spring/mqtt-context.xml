@@ -29,7 +29,7 @@
     <int-mqtt:message-driven-channel-adapter  
         id="mqttInboundAdapter" 
         client-id="mqttWeb2"
-        topics="SolarSystem/rx"
+        topics="SolarSystem/tx"
         qos="0"  
         client-factory="clientFactory"   
         auto-startup="true"  

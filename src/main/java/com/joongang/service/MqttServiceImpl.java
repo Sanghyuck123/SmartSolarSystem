@@ -44,7 +44,7 @@ public class MqttServiceImpl implements MqttService {
 		log.info("getSmartSolarSystemState.....");
 		if (tch.getAutomode().equals("")) {
 			tch.setHorizontal("x");
-			tch.setVertical("x");
+			tch.setVertical("15");
 			tch.setAutomode("x");
 			tch.setVolt("x");
 		}
