@@ -20,7 +20,7 @@
         <property name="serverURIs"> 
             <array>
                 <!-- <value>tcp://192.168.219.103:1883</value> --> 
-                <value>tcp://192.168.0.231:1883</value> 
+                <value>tcp://192.168.0.233:1883</value> 
             </array>
         </property>
     </bean>
@@ -29,7 +29,7 @@
     <int-mqtt:message-driven-channel-adapter  
         id="mqttInboundAdapter" 
         client-id="mqttWeb2"
-        topics="SolarSystem/tx"
+        topics="SolarSystem/rx"
         qos="0"  
         client-factory="clientFactory"   
         auto-startup="true"  

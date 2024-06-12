@@ -18,6 +18,20 @@
 <!-- Custom Fonts -->
 <link href="/resources/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
+<!-- Three.js 추가 -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<style>
+    #threejs-container canvas {
+    width: 400px; /* 원하는 가로 길이 */
+    height: 400px; /* 원하는 세로 길이 */
+}
+
+</style>
+
+</style>
+
+</style>
+
 </head>
 
 <body>
@@ -147,6 +161,12 @@
 			    	    </div>
 			  	    </div>
 		        </div>
+		        <!-- Three.js Canvas -->
+		        <div class="row">
+		            <div class="col-lg-12">
+		                <div id="threejs-container" style="background-color:black; height:400px;"></div>
+		            </div>
+		        </div>
 		    </div>
 	    </div>
 	</div>
@@ -161,9 +181,10 @@
 <!-- Custom Theme JavaScript -->
 <script src="/resources/dist/js/sb-admin-2.js"></script>
 <script type="text/javascript" src="/resources/js/reply.js"></script>
+
+<!-- Three.js Script -->
 <script>
 $(function() {
-	alert("test");
 	let pageNum = 1;
 	showList(pageNum);
 	$(".panel-footer").on("click", 'li a', function(e) {
@@ -277,7 +298,145 @@ $(".btn-success").on("click", function(e) {
 			function(result) {
 		})
 })
-		
+
+
+function initThreeJS() {
+    var scene = new THREE.Scene();
+
+    var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+    camera.position.set(0, 0, 20);
+    
+
+    var renderer = new THREE.WebGLRenderer();
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    document.getElementById("threejs-container").appendChild(renderer.domElement);
+
+  
+    var group = new THREE.Group();
+
+    
+    var cylinderWidth = 1;
+    var cylinderHeight = 6;
+    var cylinderDepth = 1;
+
+
+    var cylinderGeometry = new THREE.BoxGeometry(cylinderWidth, cylinderHeight, cylinderDepth);
+    var cylinderMaterial = new THREE.MeshBasicMaterial({color: 0x00ff00});
+    var cylinder = new THREE.Mesh(cylinderGeometry, cylinderMaterial);
+    group.add(cylinder); 
+
+
+    var rectangleWidth = 4;
+    var rectangleHeight = 1; 
+    var rectangleDepth = 0.1;
+
+    var rectangleGeometry = new THREE.BoxGeometry(rectangleWidth, rectangleHeight, rectangleDepth);
+    var rectangleMaterial = new THREE.MeshBasicMaterial({color: 0xff0000});
+    var rectangle = new THREE.Mesh(rectangleGeometry, rectangleMaterial);
+
+    rectangle.position.y = cylinderHeight / 2 + rectangleHeight / 2;
+    rectangle.rotation.x = Math.PI / 12; 
+    group.add(rectangle);
+
+    scene.add(group); 
+
+    function render() {
+        renderer.render(scene, camera);
+    }
+
+    render();
+
+    var isDragging = false;
+    var previousMousePosition = {
+        x: 0,
+        y: 0
+    };
+
+    document.addEventListener('mousedown', onMouseDown);
+    document.addEventListener('mouseup', onMouseUp);
+    document.addEventListener('mousemove', onMouseMove);
+
+    function onMouseDown(event) {
+        isDragging = true;
+        previousMousePosition = {
+            x: event.clientX,
+            y: event.clientY
+        };
+    }
+
+    function onMouseUp() {
+        isDragging = false;
+    }
+
+    function onMouseMove(event) {
+        if (isDragging) {
+            var deltaMove = {
+                x: event.clientX - previousMousePosition.x,
+                y: event.clientY - previousMousePosition.y
+            };
+
+            group.rotation.x += deltaMove.y * 0.01;
+            group.rotation.y += deltaMove.x * 0.01;
+
+            previousMousePosition = {
+                x: event.clientX,
+                y: event.clientY
+            };
+
+            render();
+        }
+    }
+}
+
+window.onload = initThreeJS;
+
+$("#up-button").on("click", function(e) {
+    e.preventDefault();
+    var currentRotationX = group.rotation.x;
+    if (currentRotationX > Math.PI / 12) {
+        var rotateAngle = Math.PI / 6; 
+        group.rotation.x -= rotateAngle;
+        render();
+    }
+});
+
+$("#down-button").on("click", function(e) {
+    e.preventDefault();
+    var currentRotationX = group.rotation.x;
+    if (currentRotationX < Math.PI * 5 / 12) { 
+        var rotateAngle = Math.PI / 6; 
+        group.rotation.x += rotateAngle;
+        render();
+    }
+});
+
+$("#right-button").on("click", function(e) {
+    e.preventDefault();
+    var rotateAngle = Math.PI / 6; 
+    var currentRotation = group.rotation.y;
+    var newRotation = currentRotation - rotateAngle;
+    if (newRotation <= -Math.PI / 2) {
+        newRotation = -Math.PI / 2;
+    }
+    group.rotation.y = newRotation;
+    render();
+});
+
+$("#left-button").on("click", function(e) {
+    e.preventDefault();
+    var rotateAngle = Math.PI / 6; 
+    var currentRotation = group.rotation.y;
+    var newRotation = currentRotation + rotateAngle;
+    if (newRotation >= Math.PI / 6) {
+        newRotation = Math.PI / 6;
+    }
+    group.rotation.y = newRotation;
+    render();
+});
+
+
+
+
 </script>
 </body>
 </html>
