@@ -185,7 +185,7 @@
 <!-- Three.js Script -->
 <script>
 $(function() {
-	
+	alert("test")
 	let pageNum = 1;
 	showList(pageNum);
 	$(".panel-footer").on("click", 'li a', function(e) {
@@ -317,7 +317,7 @@ function initThreeJS() {
 
     
     var cylinderWidth = 1;
-    var cylinderHeight = 6;
+    var cylinderHeight = 10;
     var cylinderDepth = 1;
 
 
@@ -327,8 +327,8 @@ function initThreeJS() {
     group.add(cylinder); 
 
 
-    var rectangleWidth = 6;
-    var rectangleHeight = 1; 
+    var rectangleWidth = 12;
+    var rectangleHeight = 4; 
     var rectangleDepth = 0.1;
 
     var rectangleGeometry = new THREE.BoxGeometry(rectangleWidth, rectangleHeight, rectangleDepth);

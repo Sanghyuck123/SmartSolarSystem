@@ -19,8 +19,8 @@
         <property name="password" value="password" /> 
         <property name="serverURIs"> 
             <array>
-                <!-- <value>tcp://192.168.219.103:1883</value> --> 
-                <value>tcp://192.168.0.233:1883</value> 
+                 <value>tcp://192.168.219.103:1883</value>
+                <!-- <value>tcp://192.168.0.233:1883</value>  -->
             </array>
         </property>
     </bean>
