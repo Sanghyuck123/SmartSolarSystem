@@ -46,14 +46,14 @@
 	                   <div class="panel-body">
 	                       <div class="row">
 	                           <div class="col-sm-12" style="background-color:white;">
-	                           <a id="command" data-value="1" class="btn btn-lg btn-success btn-block">ON</a>
+	                           <a id="command" data-value="0" class="btn btn-lg btn-success btn-block">ON</a>
 	                       		</div>
 	                       </div>
 	                       <br>
 	                       <div class="row">
 	                   
 	                           <div class="col-sm-12" style="background-color:white;">
-	                           <a id="command" data-value="0" class="btn btn-lg btn-success btn-block">OFF</a></div>
+	                           <a id="command" data-value="1" class="btn btn-lg btn-success btn-block">OFF</a></div>
 	                       </div>
 			       	 </div>
 		        </div>
@@ -185,7 +185,7 @@
 <!-- Three.js Script -->
 <script>
 $(function() {
-	alert("test")
+	
 	let pageNum = 1;
 	showList(pageNum);
 	$(".panel-footer").on("click", 'li a', function(e) {
